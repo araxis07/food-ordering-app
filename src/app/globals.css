@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+}
+
+/* ตรวจสอบว่า CSS โหลดถูกต้อง */
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ปรับแต่ง Tailwind */
+@layer components {
+  .btn {
+    @apply px-4 py-2 transition-colors rounded-md;
+  }
+  
+  .btn-primary {
+    @apply text-white bg-orange-500 hover:bg-orange-600;
+  }
+  
+  .btn-secondary {
+    @apply text-white bg-green-500 shadow-sm hover:bg-green-600;
+  }
+  
+  .btn-outline {
+    @apply border border-gray-300 hover:bg-gray-100;
+  }
+  
+  .card {
+    @apply overflow-hidden bg-white rounded-lg shadow-md;
+  }
+  
+  .badge {
+    @apply px-2 py-1 text-xs font-medium rounded-full;
+  }
+  
+  .input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500;
+  }
+}
+
+/* ทดสอบว่า CSS ทำงานด้วย class ทดสอบ */
+.test-css-working {
+  border: 4px solid red;
+  background-color: yellow;
+  padding: 20px;
+}
