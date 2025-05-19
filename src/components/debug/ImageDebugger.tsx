@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 
 interface ImageDebuggerProps {
   src: string;
@@ -55,6 +56,18 @@ const ImageDebugger = ({ src, alt }: ImageDebuggerProps) => {
         {status === 'error' && <span className="text-red-500">โหลดไม่สำเร็จ ✗</span>}
       </p>
       {details && <p className="text-gray-700">{details}</p>}
+      {status === 'success' && (
+        <div className="mt-3">
+          <div className="relative h-40 bg-white rounded-md overflow-hidden">
+            <OptimizedImage
+              src={src}
+              alt={alt}
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

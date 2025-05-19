@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 import Link from 'next/link';
 import { Star } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -87,14 +87,13 @@ const PopularItems = () => {
               <Link 
                 href={`/menu/${item.id}`}
                 className="block overflow-hidden transition-shadow bg-white shadow-md rounded-xl hover:shadow-lg"
-              >
-                <div className="relative w-full h-48">
-                  <Image
+              >                <div className="relative w-full h-48">
+                  <OptimizedImage
                     src={item.image || '/images/placeholder-food.jpg'}
                     alt={item.name}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    style={{ objectFit: 'cover' }}
+                    className="object-cover"
                   />
                   <div className="absolute px-2 py-1 text-xs font-medium text-white bg-orange-500 rounded top-2 right-2">
                     ยอดนิยม

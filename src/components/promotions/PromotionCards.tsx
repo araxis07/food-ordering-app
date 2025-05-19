@@ -1,5 +1,5 @@
 import React from 'react';
-import FallbackImage from '../ui/FallbackImage';
+import OptimizedImage from '../ui/OptimizedImage';
 
 const promotions = [
   {
@@ -32,14 +32,13 @@ const PromotionCards = () => {
   return (
     <div className="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2 lg:grid-cols-3">
       {promotions.map((promo) => (
-        <div key={promo.id} className="overflow-hidden bg-white rounded-lg shadow-md">
-          <div className="relative h-48">
-            <FallbackImage
+        <div key={promo.id} className="overflow-hidden bg-white rounded-lg shadow-md">          <div className="relative h-48">
+            <OptimizedImage
               src={promo.image}
               alt={promo.title}
-              width={400}
-              height={200}
-              className="object-cover w-full h-full"
+              fill
+              className="object-cover"
+              priority
             />
           </div>
           <div className="p-4">

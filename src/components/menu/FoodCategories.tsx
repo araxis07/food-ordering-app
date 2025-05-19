@@ -22,13 +22,12 @@ const FoodCategories = () => {
             className="block group"
           >
             <div className="overflow-hidden bg-white rounded-lg shadow-md">
-              <div className="relative h-36">
-                <FallbackImage
+              <div className="relative h-36">                <OptimizedImage
                   src={category.image}
                   alt={category.name}
-                  width={300}
-                  height={150}
-                  className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  className="transition-transform duration-300 group-hover:scale-110"
+                  priority
                 />
               </div>
               <div className="p-3 text-center">{category.name}</div>
