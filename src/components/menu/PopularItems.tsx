@@ -38,13 +38,14 @@ const PopularItems = () => {
       <h2 className="mb-4 text-xl font-semibold">อาหารยอดนิยม</h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {popularItems.map((item) => (
-          <div key={item.id} className="overflow-hidden bg-white rounded-lg shadow-md">
-            <div className="relative h-48">              <OptimizedImage
+          <div key={item.id} className="overflow-hidden bg-white rounded-lg shadow-md">            <div className="relative h-48">
+              <OptimizedImage
                 src={item.image}
                 alt={item.name}
                 fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover w-full h-full"
+                priority={item.id <= 2}
+                quality={85}
               />
             </div>
             <div className="p-4">

@@ -11,7 +11,11 @@ const nextConfig = {
         hostname: 'placehold.co',
       }
     ],
-    unoptimized: true // ตั้งค่านี้เพื่อแก้ปัญหากรณีที่ใช้ static export
+    unoptimized: false, // เปิดใช้งานการ optimize รูปภาพ
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    domains: ['localhost'],
+    minimumCacheTTL: 60
   },
 };
 

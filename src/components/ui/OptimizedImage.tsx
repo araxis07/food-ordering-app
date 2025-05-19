@@ -29,27 +29,43 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   quality = 85,
 }) => {
   const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState<string>(src);
   
   useEffect(() => {
+    // Normalize image path
     const normalizedSrc = !src.startsWith('http') && !src.startsWith('/') ? `/${src}` : src;
     setImageSrc(normalizedSrc);
     
+    // Preload image
     const img = new window.Image();
     img.src = normalizedSrc;
     
     img.onload = () => {
       setError(false);
+      setLoaded(true);
     };
     
     img.onerror = () => {
+      console.warn(`Failed to load image: ${normalizedSrc}`);
       setError(true);
+      setLoaded(true);
+    };
+
+    // Clean up
+    return () => {
+      img.onload = null;
+      img.onerror = null;
     };
   }, [src]);
   
   const placeholderUrl = `https://placehold.co/${width || 300}x${height || 200}/F97316/FFFFFF?text=${encodeURIComponent(alt)}`;
 
-  return (    <div className={`relative w-full h-full ${className}`}>
+  return (
+    <div className={`relative w-full h-full overflow-hidden ${className}`}>
+      {!loaded && (
+        <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+      )}
       <Image
         src={error ? placeholderUrl : imageSrc}
         alt={alt}
@@ -58,10 +74,11 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         height={!fill ? height : undefined}
         sizes={sizes}
         onError={() => setError(true)}
+        onLoad={() => setLoaded(true)}
         priority={priority}
         quality={quality}
-        className="object-cover"
-        unoptimized={false}
+        className={`object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        loading={priority ? 'eager' : 'lazy'}
       />
     </div>
   );
