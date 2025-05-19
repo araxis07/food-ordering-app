@@ -45,6 +45,22 @@ body {
   .input {
     @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500;
   }
+  
+  .optimized-image {
+    @apply relative overflow-hidden;
+  }
+  
+  .optimized-image img {
+    @apply object-cover transition-transform duration-300;
+  }
+
+  .image-container {
+    @apply relative w-full h-full overflow-hidden;
+  }
+
+  .image-hover {
+    @apply group-hover:scale-105 transition-transform duration-300;
+  }
 }
 
 /* ทดสอบว่า CSS ทำงานด้วย class ทดสอบ */

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 
 interface FoodItem {
   id: string | number;
@@ -50,13 +51,12 @@ const FoodCard: React.FC<FoodCardProps> = ({ foodItem }) => {
     <div className="transition-shadow duration-300 card group hover:shadow-lg">
       <div className="relative w-full h-48">
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-gray-900/70 to-transparent" />
-        <div
-          className="w-full h-full bg-gray-300 rounded-t-lg"
-          style={{
-            backgroundImage: `url(${imageSrc})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
+        <OptimizedImage
+          src={imageSrc}
+          alt={foodItem.name}
+          fill
+          className="object-cover rounded-t-lg"
+          priority={true}
         />
         <div className="absolute z-20 px-2 py-1 text-sm font-medium text-gray-800 bg-white rounded-full shadow top-3 right-3">
           ฿{foodItem.price}

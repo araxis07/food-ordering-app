@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import FallbackImage from '../ui/FallbackImage';
+import OptimizedImage from '../ui/OptimizedImage';
 
 const categories = [
   { id: 'thai', name: 'อาหารไทย', image: '/images/categories/thai.jpg' },
