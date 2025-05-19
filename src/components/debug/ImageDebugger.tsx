@@ -11,35 +11,50 @@ interface ImageDebuggerProps {
 const ImageDebugger = ({ src, alt }: ImageDebuggerProps) => {
   const [status, setStatus] = useState<'checking' | 'success' | 'error'>('checking');
   const [details, setDetails] = useState<string>('');
-  
-  useEffect(() => {
-    const checkImage = () => {
+    useEffect(() => {
+    // Only run in browser environment
+    if (typeof window === 'undefined') return;
+
+    const checkImage = async () => {
       // ทดสอบโหลดรูปภาพโดยตรง
       const img = new window.Image();
       
-      img.onload = () => {
-        setStatus('success');
-        setDetails(`ขนาดภาพ: ${img.width}x${img.height}`);
-      };
+      // Try different path variations to find working image path
+      const pathVariations = [
+        src, // Original path
+        src.startsWith('/') ? src : `/${src}`, // Add leading slash if missing
+        src.startsWith('/') ? src.substring(1) : src, // Remove leading slash if present
+        `./public${src.startsWith('/') ? src : `/${src}`}`, // Try with public folder
+      ];
       
-      img.onerror = () => {
-        setStatus('error');
-        setDetails(`ไม่พบรูปภาพที่ ${src}`);
-        
-        // ลองเติม / หน้าสุด
-        if (!src.startsWith('/') && !src.startsWith('http')) {
-          const newSrc = `/${src}`;
-          const retryImg = new window.Image();
-          retryImg.src = newSrc;
+      let foundWorkingPath = false;
+      
+      for (const path of pathVariations) {
+        try {
+          const checkImg = new window.Image();
+          const loadPromise = new Promise<void>((resolve, reject) => {
+            checkImg.onload = () => resolve();
+            checkImg.onerror = () => reject();
+          });
           
-          retryImg.onload = () => {
-            setStatus('success');
-            setDetails(`พบรูปภาพที่ ${newSrc} (ต้องเติม "/" ด้านหน้า)`);
-          };
+          checkImg.src = path;
+          
+          await loadPromise;
+          // If we get here, the image loaded successfully
+          setStatus('success');
+          setDetails(`ขนาดภาพ: ${checkImg.width}x${checkImg.height} (พาท: ${path})`);
+          foundWorkingPath = true;
+          break;
+        } catch (error) {
+          // This path variation didn't work, try next one
+          console.log(`Path failed: ${path}`);
         }
-      };
+      }
       
-      img.src = src;
+      if (!foundWorkingPath) {
+        setStatus('error');
+        setDetails(`ไม่พบรูปภาพที่ ${src} (ลองทุกวิธีแล้ว)`);
+      }
     };
     
     checkImage();
@@ -58,7 +73,7 @@ const ImageDebugger = ({ src, alt }: ImageDebuggerProps) => {
       {details && <p className="text-gray-700">{details}</p>}
       {status === 'success' && (
         <div className="mt-3">
-          <div className="relative h-40 bg-white rounded-md overflow-hidden">
+          <div className="relative h-40 overflow-hidden bg-white rounded-md">
             <OptimizedImage
               src={src}
               alt={alt}

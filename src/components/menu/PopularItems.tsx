@@ -1,5 +1,5 @@
 import React from 'react';
-import OptimizedImage from '../ui/OptimizedImage';
+import FallbackImage from '../ui/FallbackImage';
 
 const popularItems = [
   {
@@ -8,6 +8,7 @@ const popularItems = [
     description: 'หมูกรอบผัดกับกระเพรา พริกขี้หนูสด และไข่ดาว',
     price: 89,
     image: '/images/menu/pad-krapow.jpg',
+    category: 'thai',
   },
   {
     id: 2,
@@ -36,16 +37,13 @@ const PopularItems = () => {
   return (
     <section className="py-6">
       <h2 className="mb-4 text-xl font-semibold">อาหารยอดนิยม</h2>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {popularItems.map((item) => (
-          <div key={item.id} className="overflow-hidden bg-white rounded-lg shadow-md">            <div className="relative h-48">
-              <OptimizedImage
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">        {popularItems.map((item) => (
+          <div key={item.id} className="overflow-hidden bg-white rounded-lg shadow-md">
+            <div className="relative h-48">
+              <FallbackImage
                 src={item.image}
                 alt={item.name}
                 fill
-                className="object-cover w-full h-full"
-                priority={item.id <= 2}
-                quality={85}
               />
             </div>
             <div className="p-4">

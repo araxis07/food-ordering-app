@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import OptimizedImage from '@/components/ui/OptimizedImage';
+import FallbackImage from '@/components/ui/FallbackImage';
 
 // ข้อมูลหมวดหมู่อาหาร
 const categories = [
@@ -65,11 +65,10 @@ export default function Menu() {
               >
                 <div className="overflow-hidden bg-white rounded-lg shadow-md">
                   <div className="relative h-36">
-                    <OptimizedImage
+                    <FallbackImage
                       src={category.image}
                       alt={category.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, 25vw"
                       className="transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
@@ -87,11 +86,10 @@ export default function Menu() {
             {menuItems.map((item) => (
               <div key={item.id} className="overflow-hidden bg-white rounded-lg shadow-md">
                 <div className="relative h-48">
-                  <OptimizedImage
+                  <FallbackImage
                     src={item.image}
                     alt={item.name}
                     fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
                 <div className="p-4">

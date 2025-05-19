@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import ImageDebugger from '@/components/debug/ImageDebugger';
-import OptimizedImage from '@/components/ui/OptimizedImage';
+import FallbackImage from '@/components/ui/FallbackImage';
+import ImageSetup from '@/components/helpers/ImageSetup';
 
 const imagePaths = [
   // หมวดหมู่อาหาร
@@ -51,19 +52,23 @@ export default function ImageDebugPage() {
           <div className="mt-4">
             <ImageDebugger src={customPath} alt="รูปภาพที่กำหนดเอง" />
             <div className="w-32 h-32 border border-gray-300">
-              <OptimizedImage src={customPath} alt="รูปภาพที่กำหนดเอง" fill />
+              <FallbackImage src={customPath} alt="รูปภาพที่กำหนดเอง" fill />
             </div>
           </div>
         )}
       </div>
       
       <h2 className="mb-3 text-xl font-semibold">รูปภาพในระบบทั้งหมด</h2>
+      
+      {/* Add the image setup diagnostic component */}
+      <div className="mb-6">
+        <ImageSetup />
+      </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {imagePaths.map((path, index) => (
           <div key={index} className="p-4 bg-white rounded-lg shadow-md">
             <ImageDebugger src={path} alt={`รูปภาพที่ ${index + 1}`} />
-            <div className="relative h-40">
-              <OptimizedImage
+            <div className="relative h-40">              <FallbackImage
                 src={path}
                 alt={`รูปภาพที่ ${index + 1}`}
                 fill
